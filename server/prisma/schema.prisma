@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
+  password String
+  role     String @default("librarian") // 'admin' | 'librarian'
+}
+
+model Book {
+  id       Int        @id @default(autoincrement())
+  title    String
+  author   String
+  isbn     String     @unique
+  coverUrl String?
+  copies   BookCopy[]
+}
+
+model BookCopy {
+  id           Int           @id @default(autoincrement())
+  bookId       Int
+  barcode      String        @unique
+  available    Boolean       @default(true)
+  book         Book          @relation(fields: [bookId], references: [id])
+  transactions Transaction[]
+}
+
+model Member {
+  id               Int      @id @default(autoincrement())
+  
+  // Personal
+  fullName         String
+  dateOfBirth      DateTime
+  gender           String?
+
+  // Contact
+  phone            String
+  email            String
+  address          String
+  location         String
+
+  // Academic
+  school           String
+  studentId        String?
+
+  // Guardian
+  guardianName     String
+  guardianPhone    String
+  guardianRelation String
+
+  // Financial
+  fineBalance      Float    @default(0)
+
+  registrationDate DateTime @default(now())
+
+  transactions     Transaction[]
+  payments         Payment[]
+}
+
+model Transaction {
+  id          Int       @id @default(autoincrement())
+  bookCopyId  Int
+  memberId    Int
+  issueDate   DateTime  @default(now())
+  dueDate     DateTime
+  returnDate  DateTime?
+  fineAmount  Float     @default(0)
+  bookCopy    BookCopy  @relation(fields: [bookCopyId], references: [id])
+  member      Member    @relation(fields: [memberId], references: [id])
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  memberId  Int
+  amount    Float
+  createdAt DateTime @default(now())
+  note      String?
+  member    Member   @relation(fields: [memberId], references: [id])
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  action    String
+  userId    Int
+  createdAt DateTime @default(now())
+}
+
+model SystemSetting {
+  id              Int     @id @default(autoincrement())
+  loanDurationDays Int    @default(14)
+  fineRatePerDay   Float  @default(500.0)
+}
+
+model NotificationLog {
+  id        Int      @id @default(autoincrement())
+  recipient String
+  type      String   // reminder, overdue
+  channel   String   // sms, email
+  status    String   // success, failed
+  message   String
+  sentAt    DateTime @default(now())
+}

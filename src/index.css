@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 220 20% 14%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 14%;
+
+    --primary: 217 72% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 30% 94%;
+    --secondary-foreground: 220 20% 14%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 46%;
+
+    --accent: 33 90% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 60% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 72% 40%;
+
+    --radius: 0.625rem;
+
+    --sidebar-background: 220 20% 14%;
+    --sidebar-foreground: 220 14% 80%;
+    --sidebar-primary: 217 72% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 18% 20%;
+    --sidebar-accent-foreground: 220 14% 90%;
+    --sidebar-border: 220 18% 22%;
+    --sidebar-ring: 217 72% 55%;
+    --sidebar-muted: 220 14% 40%;
+
+    --chart-1: 217 72% 40%;
+    --chart-2: 33 90% 55%;
+    --chart-3: 142 60% 40%;
+    --chart-4: 280 60% 50%;
+    --chart-5: 0 72% 51%;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+  }
+}
